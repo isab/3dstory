@@ -190,7 +190,7 @@ var lesson4 = {
 
         // prepare new OBJLoader and load the 'legoBrick.obj' model
         var loader = new THREE.OBJLoader();
-        loader.load('legoBrick.obj', function(object) {
+        loader.load('book.obj', function(object) {
 
             // apply custom material for all children
             var legoMat = new THREE.MeshLambertMaterial({ color: 0x008800 });

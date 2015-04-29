@@ -11,7 +11,7 @@ var lesson6 = {
 
     // create main scene
     this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.FogExp2(0xcce0ff, 0.0003);
+    this.scene.fog = new THREE.FogExp2(0xffffff, 0.0003);
 
     var SCREEN_WIDTH = window.innerWidth,
         SCREEN_HEIGHT = window.innerHeight;
@@ -26,7 +26,7 @@ var lesson6 = {
     // prepare renderer
     this.renderer = new THREE.WebGLRenderer({ antialias:true });
     this.renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-    this.renderer.setClearColor(0xff0000);
+    this.renderer.setClearColor(this.scene.fog.color);
     this.renderer.shadowMapEnabled = true;
     this.renderer.shadowMapSoft = true;
 

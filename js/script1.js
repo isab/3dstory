@@ -17,7 +17,7 @@ var lesson6 = {
         SCREEN_HEIGHT = window.innerHeight;
 
     // prepare camera
-    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 500, FAR = 4000;
+    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1000, FAR = 4000;
     this.camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
     this.scene.add(this.camera);
     this.camera.position.set(0, 100, 300);
@@ -26,7 +26,7 @@ var lesson6 = {
     // prepare renderer
     this.renderer = new THREE.WebGLRenderer({ antialias:true });
     this.renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-    //this.renderer.setClearColor(this.scene.fog.color);
+    this.renderer.setClearColor(0xff0000);
     this.renderer.shadowMapEnabled = true;
     this.renderer.shadowMapSoft = true;
 

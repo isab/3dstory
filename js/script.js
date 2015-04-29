@@ -1,3 +1,15 @@
+/**
+ *
+ * WebGL With Three.js - Lesson 4
+ * http://www.script-tutorials.com/webgl-with-three-js-lesson-4/
+ *
+ * Licensed under the MIT license.
+ * http://www.opensource.org/licenses/mit-license.php
+ * 
+ * Copyright 2014, Script Tutorials
+ * http://www.script-tutorials.com/
+ */
+
 // load texture
 var texture = THREE.ImageUtils.loadTexture('texture.png');
 texture.repeat.set(0.03, 0.03);

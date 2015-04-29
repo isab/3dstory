@@ -29,7 +29,7 @@ var lesson6 = {
         SCREEN_HEIGHT = window.innerHeight;
 
     // prepare camera
-    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1, FAR = 2000;
+    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1, FAR = 5000;
     this.camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
     this.scene.add(this.camera);
     this.camera.position.set(0, 100, 300);
@@ -73,7 +73,7 @@ var lesson6 = {
     this.scene.add(spLight);
 
     // add simple ground
-    var ground = new THREE.Mesh( new THREE.PlaneGeometry(200, 200, 10, 10), new THREE.MeshLambertMaterial({color:0x999999}) );
+    var ground = new THREE.Mesh( new THREE.PlaneGeometry(1000, 500, 10, 10), new THREE.MeshLambertMaterial({color:0x999999}) );
     ground.receiveShadow = true;
     ground.position.set(0, 0, 0);
     ground.rotation.x = -Math.PI / 2;
@@ -98,8 +98,8 @@ var lesson6 = {
           child.material = material2;
 
           // enable casting shadows
-          child.castShadow = true;
-          child.receiveShadow = true;
+          //child.castShadow = true;
+          //child.receiveShadow = true;
         }
       });
       

@@ -29,7 +29,7 @@ var lesson6 = {
         SCREEN_HEIGHT = window.innerHeight;
 
     // prepare camera
-    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 5000, FAR = 10000;
+    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1, FAR = 5000;
     this.camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
     this.scene.add(this.camera);
     this.camera.position.set(0, 100, 300);
@@ -53,7 +53,7 @@ var lesson6 = {
     // prepare controls (OrbitControls)
     this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
     this.controls.target = new THREE.Vector3(0, 0, 0);
-    this.controls.maxDistance = 2000;
+    this.controls.maxDistance = 5000;
 
     // prepare clock
     this.clock = new THREE.Clock();

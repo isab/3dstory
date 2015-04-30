@@ -106,40 +106,40 @@ var lesson6 = {
       object.scale.set(1, 1, 1);
       lesson6.scene.add(object);
     });
+  },
+
+  draw3dText: function(x, y, z, text) {
+
+      // prepare text geometry
+      var textGeometry = new THREE.TextGeometry(text, {
+          size: 60, // Font size
+          height: 20, // Font height (depth)
+          font: 'droid serif', // Font family
+          weight: 'bold', // Font weight
+          style: 'normal', // Font style
+          curveSegments: 1, // Amount of curve segments
+          bevelThickness: 5, // Bevel thickness
+          bevelSize: 5, // Bevel size
+          bevelEnabled: true, // Enable/Disable the bevel
+          material: 0, // Main material
+          extrudeMaterial: 1 // Side (extrude) material
+      });
+
+      // prepare two materials
+      var materialFront = new THREE.MeshPhongMaterial({ map: texture, color: 0xffff00, emissive: 0x888888 });
+      var materialSide = new THREE.MeshPhongMaterial({ map: texture, color: 0xff00ff, emissive: 0x444444 });
+
+      // create mesh object
+      var textMaterial = new THREE.MeshFaceMaterial([ materialFront, materialSide ]);
+      var textMesh = new THREE.Mesh(textGeometry, textMaterial);
+      textMesh.castShadow = true;
+
+      // place the mesh in the certain position, rotate it and add to the scene
+      textMesh.position.set(x, y, z);
+      textMesh.rotation.x = -0.3;
+      this.scene.add(textMesh);
   }
 };
-
-draw3dText: function(x, y, z, text) {
-
-    // prepare text geometry
-    var textGeometry = new THREE.TextGeometry(text, {
-        size: 60, // Font size
-        height: 20, // Font height (depth)
-        font: 'droid serif', // Font family
-        weight: 'bold', // Font weight
-        style: 'normal', // Font style
-        curveSegments: 1, // Amount of curve segments
-        bevelThickness: 5, // Bevel thickness
-        bevelSize: 5, // Bevel size
-        bevelEnabled: true, // Enable/Disable the bevel
-        material: 0, // Main material
-        extrudeMaterial: 1 // Side (extrude) material
-    });
-
-    // prepare two materials
-    var materialFront = new THREE.MeshPhongMaterial({ map: texture, color: 0xffff00, emissive: 0x888888 });
-    var materialSide = new THREE.MeshPhongMaterial({ map: texture, color: 0xff00ff, emissive: 0x444444 });
-
-    // create mesh object
-    var textMaterial = new THREE.MeshFaceMaterial([ materialFront, materialSide ]);
-    var textMesh = new THREE.Mesh(textGeometry, textMaterial);
-    textMesh.castShadow = true;
-
-    // place the mesh in the certain position, rotate it and add to the scene
-    textMesh.position.set(x, y, z);
-    textMesh.rotation.x = -0.3;
-    this.scene.add(textMesh);
-}
 
 // Animate the scene
 function animate() {

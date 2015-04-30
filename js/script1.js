@@ -1,5 +1,5 @@
 // load  
-var texture = THREE.ImageUtils.loadTexture('texture.png');
+var texture = THREE.ImageUtils.loadTexture('obj/texture.png');
 texture.repeat.set(0.03, 0.03);
 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 texture.anisotropy = 16;
@@ -76,7 +76,7 @@ var lesson6 = {
     // load a model
     this.loadModel();
     // add 3D text
-    this.draw3dText( 0, 500, 0, 'StoryBook');
+    this.draw3dText( -100, 20, 0, 'StoryBook');
   },
   loadModel: function() {
 
@@ -102,7 +102,7 @@ var lesson6 = {
     object.position.x = 0;
     object.position.y = 0;
     object.position.z = 0;
-    object.scale.set(5, 5, 5);
+    object.scale.set(1, 1, 1);
     lesson6.scene.add(object);
     });
   },
@@ -111,8 +111,8 @@ var lesson6 = {
 
       // prepare text geometry
       var textGeometry = new THREE.TextGeometry(text, {
-          size: 150, // Font size
-          height: 30, // Font height (depth)
+          size: 20, // Font size
+          height: 10, // Font height (depth)
           font: 'droid serif', // Font family
           weight: 'bold', // Font weight
           style: 'normal', // Font style

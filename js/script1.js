@@ -77,7 +77,7 @@ var lesson6 = {
     // load a model
     this.loadModel();
     // add 3D text
-    this.draw3dText( 10, 200, 0, 'StoryBook');
+    this.draw3dText( 0, 500, 0, 'StoryBook');
   },
   loadModel: function() {
 
@@ -112,7 +112,7 @@ var lesson6 = {
 
       // prepare text geometry
       var textGeometry = new THREE.TextGeometry(text, {
-          size: 60, // Font size
+          size: 100, // Font size
           height: 20, // Font height (depth)
           font: 'droid serif', // Font family
           weight: 'bold', // Font weight

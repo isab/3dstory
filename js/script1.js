@@ -103,7 +103,7 @@ var lesson6 = {
       object.position.x = 0;
       object.position.y = 0;
       object.position.z = 0;
-      object.scale.set(40, 40, 40);
+      object.scale.set(30, 30, 30);
       lesson6.scene.add(object);
     });
   },
@@ -112,8 +112,8 @@ var lesson6 = {
 
       // prepare text geometry
       var textGeometry = new THREE.TextGeometry(text, {
-          size: 100, // Font size
-          height: 20, // Font height (depth)
+          size: 150, // Font size
+          height: 30, // Font height (depth)
           font: 'droid serif', // Font family
           weight: 'bold', // Font weight
           style: 'normal', // Font style

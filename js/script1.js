@@ -1,4 +1,4 @@
-// load texture
+// load  
 var texture = THREE.ImageUtils.loadTexture('texture.png');
 texture.repeat.set(0.03, 0.03);
 texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
@@ -77,7 +77,7 @@ var lesson6 = {
     // load a model
     this.loadModel();
     // add 3D text
-    this.draw3dText( -550, 100, 0, 'StoryBook');
+    this.draw3dText( 10, 200, 0, 'StoryBook');
   },
   loadModel: function() {
 

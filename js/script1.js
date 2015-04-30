@@ -91,7 +91,7 @@ var lesson6 = {
         if (child instanceof THREE.Mesh) {
 
           // apply custom material
-          child.material = material2;
+          //child.material = material2;
           child.material.color.setRGB(1,0,0);
           // enable casting shadows
           child.castShadow = true;

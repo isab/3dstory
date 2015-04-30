@@ -1,3 +1,10 @@
+// load texture
+var texture = THREE.ImageUtils.loadTexture('texture.png');
+texture.repeat.set(0.03, 0.03);
+texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+texture.anisotropy = 16;
+texture.needsUpdate = true;
+
 var lesson6 = {
   scene: null,
   camera: null,
@@ -69,6 +76,8 @@ var lesson6 = {
 
     // load a model
     this.loadModel();
+    // add 3D text
+    this.draw3dText( -550, 100, 0, 'StoryBook');
   },
   loadModel: function() {
 
@@ -100,22 +109,37 @@ var lesson6 = {
   }
 };
 
-//create text
-var c = document.createElement('canvas');
-      c.getContext('2d').font = '50px Arial';
-      c.getContext('2d').fillText('Hello, world!', 2, 50);
+draw3dText: function(x, y, z, text) {
 
-      var tex = new THREE.Texture(c);
-      tex.needsUpdate = true;
-      
-      var mat = new THREE.MeshBasicMaterial({map: tex});
-      mat.transparent = true;
+    // prepare text geometry
+    var textGeometry = new THREE.TextGeometry(text, {
+        size: 60, // Font size
+        height: 20, // Font height (depth)
+        font: 'droid serif', // Font family
+        weight: 'bold', // Font weight
+        style: 'normal', // Font style
+        curveSegments: 1, // Amount of curve segments
+        bevelThickness: 5, // Bevel thickness
+        bevelSize: 5, // Bevel size
+        bevelEnabled: true, // Enable/Disable the bevel
+        material: 0, // Main material
+        extrudeMaterial: 1 // Side (extrude) material
+    });
 
-      var titleQuad = new THREE.Mesh(
-        new THREE.PlaneGeometry(c.width, c.height),
-        mat
-      );
-      titleQuad.doubleSided = true;
+    // prepare two materials
+    var materialFront = new THREE.MeshPhongMaterial({ map: texture, color: 0xffff00, emissive: 0x888888 });
+    var materialSide = new THREE.MeshPhongMaterial({ map: texture, color: 0xff00ff, emissive: 0x444444 });
+
+    // create mesh object
+    var textMaterial = new THREE.MeshFaceMaterial([ materialFront, materialSide ]);
+    var textMesh = new THREE.Mesh(textGeometry, textMaterial);
+    textMesh.castShadow = true;
+
+    // place the mesh in the certain position, rotate it and add to the scene
+    textMesh.position.set(x, y, z);
+    textMesh.rotation.x = -0.3;
+    this.scene.add(textMesh);
+}
 
 // Animate the scene
 function animate() {

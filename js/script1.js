@@ -100,6 +100,23 @@ var lesson6 = {
   }
 };
 
+//create text
+var c = document.createElement('canvas');
+      c.getContext('2d').font = '50px Arial';
+      c.getContext('2d').fillText('Hello, world!', 2, 50);
+
+      var tex = new THREE.Texture(c);
+      tex.needsUpdate = true;
+      
+      var mat = new THREE.MeshBasicMaterial({map: tex});
+      mat.transparent = true;
+
+      var titleQuad = new THREE.Mesh(
+        new THREE.PlaneGeometry(c.width, c.height),
+        mat
+      );
+      titleQuad.doubleSided = true;
+
 // Animate the scene
 function animate() {
   requestAnimationFrame(animate);

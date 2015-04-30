@@ -23,7 +23,7 @@ var lesson6 = {
         SCREEN_HEIGHT = window.innerHeight;
 
     // prepare camera
-    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 2000, FAR = 4000;
+    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1, FAR = 2000;
     this.camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
     this.scene.add(this.camera);
     this.camera.position.set(0, 100, 300);

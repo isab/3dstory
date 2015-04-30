@@ -70,7 +70,7 @@ var lesson6 = {
     var ground = new THREE.Mesh( new THREE.PlaneGeometry(500, 500, 10, 10), new THREE.MeshLambertMaterial({color:0x999999}) );
     ground.receiveShadow = true;
     ground.position.set(0, 0, 0);
-   // ground.rotation.x = -Math.PI / 2;
+    ground.rotation.x = -Math.PI / 2;
     this.scene.add(ground);
 
     // load a model
@@ -102,6 +102,7 @@ var lesson6 = {
       object.position.x = 0;
       object.position.y = 0;
       object.position.z = 0;
+      object.rotation.x = -Math.PI / 2;
       object.scale.set(30, 30, 30);
       lesson6.scene.add(object);
     });

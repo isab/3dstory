@@ -68,7 +68,7 @@ var lesson6 = {
     this.scene.add(spLight);
 
     // add simple ground
-    var ground = new THREE.Mesh( new THREE.PlaneGeometry(1000, 500, 10, 10), new THREE.MeshLambertMaterial({color:0x999999}) );
+    var ground = new THREE.Mesh( new THREE.PlaneGeometry(700, 500, 10, 10), new THREE.MeshLambertMaterial({color:0x999999}) );
     ground.receiveShadow = true;
     ground.position.set(0, 0, 0);
     ground.rotation.x = -Math.PI / 2;

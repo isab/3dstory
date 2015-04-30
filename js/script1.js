@@ -94,8 +94,8 @@ var lesson6 = {
           //child.material = material2;
           child.material.color.setRGB(1,0,0);
           // enable casting shadows
-          child.castShadow = true;
-          child.receiveShadow = true;
+          //child.castShadow = true;
+          //child.receiveShadow = true;
         }
       });
       

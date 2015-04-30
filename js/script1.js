@@ -102,7 +102,7 @@ var lesson6 = {
     object.position.x = 0;
     object.position.y = 0;
     object.position.z = 0;
-    object.scale.set(130, 130, 130);
+    object.scale.set(30, 30, 30);
     lesson6.scene.add(object);
     });
   },

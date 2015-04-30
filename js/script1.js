@@ -80,33 +80,18 @@ var lesson6 = {
   },
   loadModel: function() {
 
-    // prepare loader and load the model
-    var oLoader = new THREE.OBJLoader();
-    oLoader.load('obj/Book2.obj', function(object, materials) {
-
-      // var material = new THREE.MeshFaceMaterial(materials);
-      var material2 = new THREE.MeshLambertMaterial({ color: 0xa65e00 });
-
-      object.traverse( function(child) {
-        if (child instanceof THREE.Mesh) {
-
-          // apply custom material
-          //child.material = material2;
-          child.material.color.setRGB(1,0,0);
-          // enable casting shadows
-          //child.castShadow = true;
-          //child.receiveShadow = true;
-        }
-      });
-      
-      object.position.x = 0;
-      object.position.y = 0;
-      object.position.z = 0;
-      //object.rotation.x = -Math.PI / 2;
-      object.scale.set(30, 30, 30);
-      lesson6.scene.add(object);
-    });
-  },
+        var loader = new THREE.OBJLoader();
+        loader.addEventListener( 'obj/Book2.obj', function ( event )
+        {
+            var object = event.content;
+            object.traverse( function ( child )
+            {
+                if ( child instanceof THREE.Mesh )
+                    child.material.color.setRGB (1, 0, 0);
+            });
+            scene.add( object );
+        });
+    },
 
   draw3dText: function(x, y, z, text) {
 

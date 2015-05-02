@@ -77,6 +77,7 @@ var lesson6 = {
     this.loadModel();
     // add 3D text
     this.draw3dText( -100, 20, 0, 'StoryBook');
+    this.drawSimpleSkybox();
   },
   loadModel: function() {
 
@@ -106,6 +107,32 @@ var lesson6 = {
     lesson6.scene.add(object);
     });
   },
+
+  drawSimpleSkybox: function() {
+
+   var prefix = 'skybox/';
+   var cubeSides = [ prefix + 'posx.jpg', prefix + 'negx.jpg',
+    prefix + 'posy.jpg', prefix + 'negy.jpg', 
+    prefix + 'posz.jpg', prefix + 'negz.jpg' ];
+
+     // load images onto cube
+     var scene = THREE.ImageUtils.loadTextureCube(cubeSides);
+     scene.format = THREE.RGBFormat;
+
+      // prepare the shader to render the skybox
+      var shader = THREE.ShaderLib["cube"];
+      shader.uniforms["tCube"].value = scene;
+      var material = new THREE.ShaderMaterial( {
+       fragmentShader: shader.fragmentShader, vertexShader: shader.vertexShader,
+       uniforms: shader.uniforms, depthWrite: false, side: THREE.BackSide
+     });
+
+      // create Mesh with cube geometry and add to the scene
+      var skyBox = new THREE.Mesh(new THREE.CubeGeometry(500, 500, 500), material);
+      material.needsUpdate = true;
+
+      this.scene.add(skyBox);
+    },
 
   draw3dText: function(x, y, z, text) {
 

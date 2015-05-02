@@ -1,4 +1,18 @@
 <!DOCTYPE html>
+
+<style>
+.styled-select select {
+   background: transparent;
+   width: 150px;
+   padding: 5px;
+   font-size: 15px;
+   line-height: 1;
+   border: 1px dashed #EEEEEE;
+   height: 25px;
+   -webkit-appearance: none;
+   }
+</style>
+
 <html lang="en" >
     <head>
         <meta charset="utf-8" />
@@ -15,5 +29,31 @@
         <script src="font1.js"></script>
         <script src="js/stats.min.js"></script>
         <script src="js/script1.js"></script>
+
+        <div style="float: left; width: 100%; height: 150px; border: 2px solid #EEEEEE; font: 15px Arial;"  class="styled-select">
+            <form method="post">
+                One day <select>
+                          <option value="Dan">Dan</option>
+                          <option value="Isabel">Isabel</option>
+                        </select> went walking at the <select>
+                                                        <option value="park">park</option>
+                                                        <option value="beach">beach</option>
+                                                    </select>
+                Then <select>
+                        <option value="Dan">Dan</option>
+                        <option value="Isabel">Isabel</option>
+                    </select> came walking by.<p>
+                They started chatting and saw a <select>
+                                                    <option value="dog">dog</option>
+                                                    <option value="cat">cat</option>
+                                                </select> coming by.
+                After a while the sun started to set and they had to go home.<p>
+                They listened to some <select>
+                                        <option value="tswift">Taylor Swift</option>
+                                        <option value="friends">Friends Theme Song</option>
+                                    </select> and went to bed.<p>
+                <input type="submit" value="Submit"><br>
+            </form>                                     
+        </div>
     </body>
 </html>

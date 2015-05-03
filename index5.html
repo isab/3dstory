@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<style>
+.styled-select select {
+   background: transparent;
+   width: 150px;
+   padding: 5px;
+   font-size: 15px;
+   line-height: 1;
+   border: 1px dashed #EEEEEE;
+   height: 25px;
+   -webkit-appearance: none;
+   }
+</style>
+
+<html lang="en" >
+    <head>
+        <meta charset="utf-8" />
+        <meta name="author" content="Script Tutorials" />
+        <title>3dStory</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link href="css/main.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <script src="js/three.min.js"></script>
+        <script src="js/OBJLoader.js"></script>
+        <script src="js/THREEx.WindowResize.js"></script>
+        <script src="js/OrbitControls.js"></script>
+        <script src="font1.js"></script>
+        <script src="js/stats.min.js"></script>
+        <script src="js/script5.js"></script>
+
+        <div style="float: left; width: 100%; height: 50px; border: 2px solid #EEEEEE; font: 15px Arial;"  class="styled-select">
+            <form action="saveData()">
+                They listened to some <select id="song">
+                                        <option value="tswift">Taylor Swift</option>
+                                        <option value="friends">Friends Theme Song</option>
+                                    </select> and went to bed.<p>
+                <input type="submit" value="Submit"><br>
+            </form>                                     
+        </div>
+    </body>
+    <script>
+    function saveData(){
+      var song = document.getElementById('song').value;
+
+       var _song = {
+         Song: song
+       };
+       //converts to JSON string the Object Literal
+       _song = JSON.stringify(_song);
+       localStorage.setItem('Song', _song);
+    }
+    </script>
+</html>
+                

@@ -1,0 +1,225 @@
+// load  
+var texture = THREE.ImageUtils.loadTexture('obj/texture.png');
+texture.repeat.set(0.03, 0.03);
+texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+texture.anisotropy = 16;
+texture.needsUpdate = true;
+
+
+
+var lesson6 = {
+  scene: null,
+  camera: null,
+  renderer: null,
+  container: null,
+  controls: null,
+  clock: null,
+  stats: null,
+
+  init: function() { // Initialization
+
+    // create main scene
+    this.scene = new THREE.Scene();
+
+    var SCREEN_WIDTH = window.innerWidth,
+        SCREEN_HEIGHT = window.innerHeight;
+
+    // prepare camera
+    var VIEW_ANGLE = 45, ASPECT = SCREEN_WIDTH / SCREEN_HEIGHT, NEAR = 1, FAR = 2000;
+    this.camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+    this.scene.add(this.camera);
+    this.camera.position.set(0, 100, 300);
+    this.camera.lookAt(new THREE.Vector3(0,0,0));
+
+    // prepare renderer
+    this.renderer = new THREE.WebGLRenderer({ antialias:true });
+    this.renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+    this.renderer.setClearColor(0xffffff);
+    this.renderer.shadowMapEnabled = true;
+    this.renderer.shadowMapSoft = true;
+
+    // prepare container
+    this.container = document.createElement('div');
+    document.body.appendChild(this.container);
+    this.container.appendChild(this.renderer.domElement);
+
+    // events
+    THREEx.WindowResize(this.renderer, this.camera);
+
+    // prepare controls (OrbitControls)
+    this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.target = new THREE.Vector3(0, 0, 0);
+    this.controls.maxDistance = 4000;
+
+    // prepare clock
+    this.clock = new THREE.Clock();
+
+    // prepare stats
+    this.stats = new Stats();
+    this.stats.domElement.style.position = 'absolute';
+    this.stats.domElement.style.left = '50px';
+    this.stats.domElement.style.bottom = '50px';
+    this.stats.domElement.style.zIndex = 1;
+    this.container.appendChild( this.stats.domElement );
+
+    // add spot light
+    var spLight = new THREE.SpotLight(0xffffff, 1.75, 2000, Math.PI / 3);
+    spLight.castShadow = true;
+    spLight.position.set(-100, 300, -50);
+    this.scene.add(spLight);
+
+    // add simple ground
+    // var ground = new THREE.Mesh( new THREE.PlaneGeometry(500, 500, 10, 10), new THREE.MeshLambertMaterial({color:0x999999}) );
+    // ground.receiveShadow = true;
+    // ground.position.set(0, 0, 0);
+    // ground.rotation.x = -Math.PI / 2;
+    // this.scene.add(ground);
+
+    // load a model
+    this.loadModel();
+    this.loadAnimation();
+    // add 3D text
+    this.draw3dText( -100, 20, 0, 'StoryBook');
+    this.drawSimpleSkybox();
+  },
+  loadModel: function() {
+
+    // prepare loader and load the model
+    var oLoader = new THREE.OBJLoader();
+    oLoader.load('obj/Book2.obj', function(object, materials) {
+   
+    // var material = new THREE.MeshFaceMaterial(materials);
+    var material2 = new THREE.MeshLambertMaterial({ color: 0xffffff });
+   
+    object.traverse( function(child) {
+      if (child instanceof THREE.Mesh) {
+  
+        // apply custom material
+        child.material = material2;
+   
+        // enable casting shadows
+        child.castShadow = true;
+        child.receiveShadow = true;
+      }
+    });
+     
+    object.position.x = 0;
+    object.position.y = 0;
+    object.position.z = 0;
+    object.scale.set(1, 1, 1);
+    lesson6.scene.add(object);
+    });
+  },
+
+  loadAnimation: function() {
+
+    var loader = new THREE.JSONLoader();
+
+    loader.load( 'obj/dog5.js', function ( geometry, materials ) {
+
+          for ( var k in materials ) {
+
+            materials[k].skinning = true;
+
+          }
+
+          skinnedMesh = new THREE.SkinnedMesh(geometry, new THREE.MeshFaceMaterial(materials));
+          skinnedMesh.position.set(20,20,20);
+          skinnedMesh.scale.set( 11, 11, 11 );
+          lesson6.scene.add( skinnedMesh );
+          animation = new THREE.Animation( skinnedMesh, skinnedMesh.geometry.animations[ 0 ]);
+          animation.play();
+
+        });
+
+  },
+
+  drawSimpleSkybox: function() {
+
+   var prefix = 'skybox/';
+   var cubeSides = [ prefix + 'posx.jpg', prefix + 'negx.jpg',
+    prefix + 'posy.jpg', prefix + 'negy.jpg', 
+    prefix + 'posz.jpg', prefix + 'negz.jpg' ];
+
+     // load images onto cube
+     var scene = THREE.ImageUtils.loadTextureCube(cubeSides);
+     scene.format = THREE.RGBFormat;
+
+      // prepare the shader to render the skybox
+      var shader = THREE.ShaderLib["cube"];
+      shader.uniforms["tCube"].value = scene;
+      var material = new THREE.ShaderMaterial( {
+       fragmentShader: shader.fragmentShader, vertexShader: shader.vertexShader,
+       uniforms: shader.uniforms, depthWrite: false, side: THREE.BackSide
+     });
+
+      // create Mesh with cube geometry and add to the scene
+      var skyBox = new THREE.Mesh(new THREE.CubeGeometry(500, 500, 500), material);
+      material.needsUpdate = true;
+
+      this.scene.add(skyBox);
+    },
+
+  draw3dText: function(x, y, z, text) {
+
+      // prepare text geometry
+      var textGeometry = new THREE.TextGeometry(text, {
+          size: 20, // Font size
+          height: 10, // Font height (depth)
+          font: 'droid serif', // Font family
+          weight: 'bold', // Font weight
+          style: 'normal', // Font style
+          curveSegments: 1, // Amount of curve segments
+          bevelThickness: 5, // Bevel thickness
+          bevelSize: 5, // Bevel size
+          bevelEnabled: true, // Enable/Disable the bevel
+          material: 0, // Main material
+          extrudeMaterial: 1 // Side (extrude) material
+      });
+
+      // prepare two materials
+      var materialFront = new THREE.MeshPhongMaterial({ map: texture, color: 0xffff00, emissive: 0x888888 });
+      var materialSide = new THREE.MeshPhongMaterial({ map: texture, color: 0xff00ff, emissive: 0x444444 });
+
+      // create mesh object
+      var textMaterial = new THREE.MeshFaceMaterial([ materialFront, materialSide ]);
+      var textMesh = new THREE.Mesh(textGeometry, textMaterial);
+      textMesh.castShadow = true;
+
+      // place the mesh in the certain position, rotate it and add to the scene
+      textMesh.position.set(x, y, z);
+      textMesh.rotation.x = -0.3;
+      this.scene.add(textMesh);
+  }
+};
+
+function animate() {
+
+  requestAnimationFrame( animate );
+
+  THREE.AnimationHandler.update( lesson6.clock.getDelta() );
+
+  lesson6.controls.update();
+
+  render();
+  lesson6.stats.update();
+
+}
+
+function render() {
+
+  lesson6.renderer.render( lesson6.scene, lesson6.camera );
+
+}
+
+// Initialize lesson on page load
+function initializeLesson() {
+  lesson6.init();
+  animate();
+}
+
+if (window.addEventListener)
+  window.addEventListener('load', initializeLesson, false);
+else if (window.attachEvent)
+  window.attachEvent('onload', initializeLesson);
+else window.onload = initializeLesson;

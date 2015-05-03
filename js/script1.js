@@ -5,6 +5,8 @@ texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 texture.anisotropy = 16;
 texture.needsUpdate = true;
 
+
+
 var lesson6 = {
   scene: null,
   camera: null,
@@ -75,6 +77,7 @@ var lesson6 = {
 
     // load a model
     this.loadModel();
+    this.loadAnimation();
     // add 3D text
     this.draw3dText( -100, 20, 0, 'StoryBook');
     this.drawSimpleSkybox();
@@ -86,7 +89,7 @@ var lesson6 = {
     oLoader.load('obj/Book2.obj', function(object, materials) {
    
     // var material = new THREE.MeshFaceMaterial(materials);
-    var material2 = new THREE.MeshLambertMaterial({ color: 0xa65e00 });
+    var material2 = new THREE.MeshLambertMaterial({ color: 0xdde7ee });
    
     object.traverse( function(child) {
       if (child instanceof THREE.Mesh) {
@@ -106,6 +109,43 @@ var lesson6 = {
     object.scale.set(1, 1, 1);
     lesson6.scene.add(object);
     });
+  },
+
+  loadAnimation: function() {
+    // var p;
+    // var _choices = localStorage.getItem('Choices');
+    // _choices = JSON.parse(_choices);
+
+    // if(_choices.P1 == "Dan") {
+    //   p = "obj/";
+    // }
+    // else{
+    //   p = "obj/";
+    // }
+
+    // if(_choices.Set == "park") {
+
+    // }
+
+    var loader = new THREE.JSONLoader();
+
+    loader.load( 'obj/dog5.js', function ( geometry, materials ) {
+
+          for ( var k in materials ) {
+
+            materials[k].skinning = true;
+
+          }
+
+          skinnedMesh = new THREE.SkinnedMesh(geometry, new THREE.MeshFaceMaterial(materials));
+          skinnedMesh.position.set(20,20,20);
+          skinnedMesh.scale.set( 11, 11, 11 );
+          lesson6.scene.add( skinnedMesh );
+          animation = new THREE.Animation( skinnedMesh, skinnedMesh.geometry.animations[ 0 ]);
+          animation.play();
+
+        });
+
   },
 
   drawSimpleSkybox: function() {
@@ -167,24 +207,23 @@ var lesson6 = {
   }
 };
 
-// Animate the scene
 function animate() {
-  requestAnimationFrame(animate);
+
+  requestAnimationFrame( animate );
+
+  THREE.AnimationHandler.update( lesson6.clock.getDelta() );
+
+  lesson6.controls.update();
+
   render();
-  update();
-}
-
-// Update controls and stats
-function update() {
-  lesson6.controls.update(lesson6.clock.getDelta());
   lesson6.stats.update();
+
 }
 
-// Render the scene
 function render() {
-  if (lesson6.renderer) {
-    lesson6.renderer.render(lesson6.scene, lesson6.camera);
-  }
+
+  lesson6.renderer.render( lesson6.scene, lesson6.camera );
+
 }
 
 // Initialize lesson on page load

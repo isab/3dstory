@@ -28,6 +28,28 @@
         <script src="js/OrbitControls.js"></script>
         <script src="font1.js"></script>
         <script src="js/stats.min.js"></script>
-        <script src="js/script.js"></script>
+        <script src="js/script2.js"></script>
+
+        <div style="float: left; width: 100%; height: 50px; border: 2px solid #EEEEEE; font: 15px Arial;"  class="styled-select">
+            <form action="saveData()">
+                Then <select id="p2">
+                        <option value="Dan">Dan</option>
+                        <option value="Isabel">Isabel</option>
+                    </select> came walking by.<p>
+                <input type="submit" value="Submit"><br>
+            </form>                                     
+        </div>
     </body>
+    <script>
+    function saveData(){
+      var p2 = document.getElementById('p2').value;
+
+       var _p2 = {
+         P2: p2
+       };
+       //converts to JSON string the Object Literal
+       _p2 = JSON.stringify(_p2);
+       localStorage.setItem('P2', _p2);
+    }
+    </script>
 </html>

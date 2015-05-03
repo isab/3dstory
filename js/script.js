@@ -1,11 +1,11 @@
-// load  
-var texture = THREE.ImageUtils.loadTexture('obj/texture.png');
-texture.repeat.set(0.03, 0.03);
-texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-texture.anisotropy = 16;
-texture.needsUpdate = true;
+var targetRotation = 0;
+var targetRotationOnMouseDown = 0;
 
+var mouseX = 0;
+var mouseXOnMouseDown = 0;
 
+var windowHalfX = window.innerWidth / 2;
+var windowHalfY = window.innerHeight / 2;
 
 var lesson6 = {
   scene: null,
@@ -68,78 +68,33 @@ var lesson6 = {
     spLight.position.set(-100, 300, -50);
     this.scene.add(spLight);
 
-    // add simple ground
-    // var ground = new THREE.Mesh( new THREE.PlaneGeometry(500, 500, 10, 10), new THREE.MeshLambertMaterial({color:0x999999}) );
-    // ground.receiveShadow = true;
-    // ground.position.set(0, 0, 0);
-    // ground.rotation.x = -Math.PI / 2;
-    // this.scene.add(ground);
-
     // load a model
     this.loadModel();
-    this.loadAnimation();
     // add 3D text
     this.draw3dText( -100, 20, 0, 'StoryBook');
     this.drawSimpleSkybox();
   },
+  
   loadModel: function() {
 
     // prepare loader and load the model
-    var oLoader = new THREE.OBJLoader();
-    oLoader.load('obj/Book2.obj', function(object, materials) {
-   
-    // var material = new THREE.MeshFaceMaterial(materials);
-    var material2 = new THREE.MeshLambertMaterial({ color: 0xffffff });
-   
-    object.traverse( function(child) {
-      if (child instanceof THREE.Mesh) {
-  
-        // apply custom material
-        child.material = material2;
-   
-        // enable casting shadows
-        child.castShadow = true;
-        child.receiveShadow = true;
-      }
-    });
+    var oLoader = new THREE.OBJMTLLoader();
+    oLoader.load('obj/books.obj', 'obj/books.mtl', function(object) {
      
     object.position.x = 0;
-    object.position.y = 0;
+    object.position.y = -50;
     object.position.z = 0;
     object.scale.set(1, 1, 1);
     lesson6.scene.add(object);
     });
   },
 
-  loadAnimation: function() {
-
-    var loader = new THREE.JSONLoader();
-
-    loader.load( 'obj/dog5.js', function ( geometry, materials ) {
-
-          for ( var k in materials ) {
-
-            materials[k].skinning = true;
-
-          }
-
-          skinnedMesh = new THREE.SkinnedMesh(geometry, new THREE.MeshFaceMaterial(materials));
-          skinnedMesh.position.set(20,20,20);
-          skinnedMesh.scale.set( 11, 11, 11 );
-          lesson6.scene.add( skinnedMesh );
-          animation = new THREE.Animation( skinnedMesh, skinnedMesh.geometry.animations[ 0 ]);
-          animation.play();
-
-        });
-
-  },
-
   drawSimpleSkybox: function() {
 
-   var prefix = 'skybox/';
-   var cubeSides = [ prefix + 'posx.jpg', prefix + 'negx.jpg',
-    prefix + 'posy.jpg', prefix + 'negy.jpg', 
-    prefix + 'posz.jpg', prefix + 'negz.jpg' ];
+   var prefix = 'sky/';
+   var cubeSides = [ prefix + 'sbox_px.jpg', prefix + 'sbox_nx.jpg',
+    prefix + 'sbox_py.jpg', prefix + 'sbox_ny.jpg', 
+    prefix + 'sbox_pz.jpg', prefix + 'sbox_nz.jpg' ];
 
      // load images onto cube
      var scene = THREE.ImageUtils.loadTextureCube(cubeSides);
@@ -162,36 +117,111 @@ var lesson6 = {
 
   draw3dText: function(x, y, z, text) {
 
-      // prepare text geometry
-      var textGeometry = new THREE.TextGeometry(text, {
-          size: 20, // Font size
-          height: 10, // Font height (depth)
-          font: 'droid serif', // Font family
-          weight: 'bold', // Font weight
-          style: 'normal', // Font style
-          curveSegments: 1, // Amount of curve segments
-          bevelThickness: 5, // Bevel thickness
-          bevelSize: 5, // Bevel size
-          bevelEnabled: true, // Enable/Disable the bevel
-          material: 0, // Main material
-          extrudeMaterial: 1 // Side (extrude) material
-      });
+      var theText = "3D StoryBook!";
 
-      // prepare two materials
-      var materialFront = new THREE.MeshPhongMaterial({ map: texture, color: 0xffff00, emissive: 0x888888 });
-      var materialSide = new THREE.MeshPhongMaterial({ map: texture, color: 0xff00ff, emissive: 0x444444 });
+        var hash = document.location.hash.substr( 1 );
 
-      // create mesh object
-      var textMaterial = new THREE.MeshFaceMaterial([ materialFront, materialSide ]);
-      var textMesh = new THREE.Mesh(textGeometry, textMaterial);
-      textMesh.castShadow = true;
+        if ( hash.length !== 0 ) {
 
-      // place the mesh in the certain position, rotate it and add to the scene
-      textMesh.position.set(x, y, z);
-      textMesh.rotation.x = -0.3;
-      this.scene.add(textMesh);
+          theText = hash;
+
+        }
+
+        var text3d = new THREE.TextGeometry( theText, {
+
+          size: 45,
+          height: 20,
+          curveSegments: 2,
+          font: "helvetiker"
+
+        });
+
+        text3d.computeBoundingBox();
+        var centerOffset = -0.5 * ( text3d.boundingBox.max.x - text3d.boundingBox.min.x );
+
+        var textMaterial = new THREE.MeshBasicMaterial( { color: Math.random() * 0xffffff, overdraw: 0.5 } );
+        text = new THREE.Mesh( text3d, textMaterial );
+
+        text.position.x = centerOffset;
+        text.position.y = 100;
+        text.position.z = 0;
+
+        text.rotation.x = 0;
+        text.rotation.y = Math.PI * 2;
+
+        group = new THREE.Group();
+        group.add( text );
+
+        lesson6.scene.add( group );
+
+        document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+        document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+        document.addEventListener( 'touchmove', onDocumentTouchMove, false );
   }
 };
+
+function onDocumentMouseDown( event ) {
+
+        event.preventDefault();
+
+        document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+        document.addEventListener( 'mouseup', onDocumentMouseUp, false );
+        document.addEventListener( 'mouseout', onDocumentMouseOut, false );
+
+        mouseXOnMouseDown = event.clientX - windowHalfX;
+        targetRotationOnMouseDown = targetRotation;
+
+}
+
+function onDocumentMouseMove( event ) {
+
+  mouseX = event.clientX - windowHalfX;
+
+  targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.02;
+
+}
+
+function onDocumentMouseUp( event ) {
+
+  document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
+  document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
+  document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+
+}
+
+function onDocumentMouseOut( event ) {
+
+  document.removeEventListener( 'mousemove', onDocumentMouseMove, false );
+  document.removeEventListener( 'mouseup', onDocumentMouseUp, false );
+  document.removeEventListener( 'mouseout', onDocumentMouseOut, false );
+
+}
+
+function onDocumentTouchStart( event ) {
+
+  if ( event.touches.length == 1 ) {
+
+    event.preventDefault();
+
+    mouseXOnMouseDown = event.touches[ 0 ].pageX - windowHalfX;
+    targetRotationOnMouseDown = targetRotation;
+
+  }
+
+}
+
+function onDocumentTouchMove( event ) {
+
+  if ( event.touches.length == 1 ) {
+
+    event.preventDefault();
+
+    mouseX = event.touches[ 0 ].pageX - windowHalfX;
+    targetRotation = targetRotationOnMouseDown + ( mouseX - mouseXOnMouseDown ) * 0.05;
+
+  }
+
+}
 
 function animate() {
 
@@ -207,6 +237,7 @@ function animate() {
 }
 
 function render() {
+  group.rotation.y += ( targetRotation - group.rotation.y ) * 0.05;
 
   lesson6.renderer.render( lesson6.scene, lesson6.camera );
 

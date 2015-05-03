@@ -24,35 +24,61 @@
     <body>
         <script src="js/three.min.js"></script>
         <script src="js/OBJLoader.js"></script>
+        <script src="js/MTLLoader.js"></script>
+        <script src="js/OBJMTLLoader.js"></script>
         <script src="js/THREEx.WindowResize.js"></script>
         <script src="js/OrbitControls.js"></script>
-        <script src="font1.js"></script>
+        <script src="js/Projector.js"></script>
+        <script src="js/CanvasRenderer.js"></script>
+        <script src="helvetiker_regular.typeface.js"></script>
         <script src="js/stats.min.js"></script>
         <script src="js/script1.js"></script>
 
         <div style="float: left; width: 100%; height: 50px; border: 2px solid #EEEEEE; font: 15px Arial;"  class="styled-select">
-            <form action="saveData()">
+            <form>
                 One day <select id="p1">
+                          <option value ="nothing"></option>
                           <option value="Dan">Dan</option>
                           <option value="Isabel">Isabel</option>
-                        </select> went walking at the <select id="set">
+                        </select> went walking at the <select id="set" onchange="saveData();">
+                                                        <option value ="nothing"></option>
                                                         <option value="park">park</option>
                                                         <option value="beach">beach</option>
                                                     </select><p>
-                <input type="submit" value="Submit"><br>
+                <input type="submit" value="Submit" id="runjs"><p>
             </form>                                     
         </div>
     </body>
     <script>
     function saveData(){
-      var p1 = document.getElementById('p1').value;
+      var p = document.getElementById("p1");
+      var p1 = p.options[p.selectedIndex].value;
+      var s = document.getElementById("set");
+      var set = s.options[s.selectedIndex].value;
 
        var _p1 = {
-         P1: p1
+         P1: p1,
+         Set: set
        };
+
+       //console.log(_p1.P1 + " " + _p1.Set);
        //converts to JSON string the Object Literal
-       _p1 = JSON.stringify(_p1);
-       localStorage.setItem('P1', _p1);
+       var _p1set = JSON.stringify(_p1);
+       localStorage.setItem('P1Set', _p1set);
+
+       location.reload();
     }
+
+    // var myLink = document.getElementById('runjs');
+
+    // myLink.onclick = function(){
+
+    // var script = document.createElement("script");
+    // script.type = "text/javascript";
+    // script.src = "js/script1.js"; 
+    // document.getElementsByTagName("body")[0].appendChild(script);
+    // return false;
+
+    // }
     </script>
 </html>

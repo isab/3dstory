@@ -2,6 +2,8 @@
  * @author mrdoob / http://mrdoob.com/
  */
 
+ //THIS FILE IS PART OF THREE.JS LIBRARY!!!
+
 THREE.OBJLoader = function ( manager ) {
 
 	this.manager = ( manager !== undefined ) ? manager : THREE.DefaultLoadingManager;

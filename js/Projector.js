@@ -4,6 +4,8 @@
  * @author julianwa / https://github.com/julianwa
  */
 
+ //THIS FILE IS PART OF THREE.JS LIBRARY!!!
+
 THREE.RenderableObject = function () {
 
 	this.id = 0;

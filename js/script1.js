@@ -14,7 +14,7 @@ var set = p1set.Set;
 
 //console.log(p1 + " " + set);
 
-var lesson6 = {
+var doit = {
   scene: null,
   camera: null,
   renderer: null,
@@ -111,7 +111,7 @@ var lesson6 = {
           skinnedMesh.position.set(-20,-60,-20);
           skinnedMesh.scale.set( 40, 40, 60 );
           skinnedMesh.castShadow = true;
-          lesson6.scene.add( skinnedMesh );
+          doit.scene.add( skinnedMesh );
           animation = new THREE.Animation( skinnedMesh, skinnedMesh.geometry.animations[ 0 ]);
           animation.play();
 
@@ -195,7 +195,7 @@ var lesson6 = {
 
         group.castShadow = true;
 
-        lesson6.scene.add( group );
+        doit.scene.add( group );
 
         document.addEventListener( 'mousedown', onDocumentMouseDown, false );
         document.addEventListener( 'touchstart', onDocumentTouchStart, false );
@@ -270,25 +270,25 @@ function animate() {
 
   requestAnimationFrame( animate );
 
-  THREE.AnimationHandler.update( lesson6.clock.getDelta() );
+  THREE.AnimationHandler.update( doit.clock.getDelta() );
 
-  lesson6.controls.update();
+  doit.controls.update();
 
   render();
-  lesson6.stats.update();
+  doit.stats.update();
 
 }
 
 function render() {
   group.rotation.y += ( targetRotation - group.rotation.y ) * 0.05;
 
-  lesson6.renderer.render( lesson6.scene, lesson6.camera );
+  doit.renderer.render( doit.scene, doit.camera );
 
 }
 
 // Initialize lesson on page load
 function initializeLesson() {
-  lesson6.init();
+  doit.init();
   animate();
 }
 

@@ -8,6 +8,8 @@
  *  MIT License
  */
 
+ //THIS FILE IS PART OF HOWLER.JS LIBRARY!!!
+
 (function() {
   // setup
   var cache = {};

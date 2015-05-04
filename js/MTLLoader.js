@@ -4,6 +4,8 @@
  * @author angelxuanchang
  */
 
+ //THIS FILE IS PART OF THREE.JS LIBRARY!!!
+
 THREE.MTLLoader = function( baseUrl, options, crossOrigin ) {
 
 	this.baseUrl = baseUrl;

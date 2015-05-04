@@ -21,6 +21,8 @@
 //      controls.target.z = 150;
 // Simple substitute "OrbitControls" and the control should work as-is.
 
+//THIS FILE IS PART OF THREE.JS LIBRARY!!!
+
 THREE.OrbitControls = function ( object, domElement ) {
 
 	this.object = object;

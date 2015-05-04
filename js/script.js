@@ -7,7 +7,7 @@ var mouseXOnMouseDown = 0;
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
 
-var lesson6 = {
+var doit = {
   scene: null,
   camera: null,
   renderer: null,
@@ -85,7 +85,7 @@ var lesson6 = {
     object.position.y = -50;
     object.position.z = 0;
     object.scale.set(1, 1, 1);
-    lesson6.scene.add(object);
+    doit.scene.add(object);
     });
   },
 
@@ -152,7 +152,7 @@ var lesson6 = {
         group = new THREE.Group();
         group.add( text );
 
-        lesson6.scene.add( group );
+        doit.scene.add( group );
 
         document.addEventListener( 'mousedown', onDocumentMouseDown, false );
         document.addEventListener( 'touchstart', onDocumentTouchStart, false );
@@ -227,25 +227,25 @@ function animate() {
 
   requestAnimationFrame( animate );
 
-  THREE.AnimationHandler.update( lesson6.clock.getDelta() );
+  THREE.AnimationHandler.update( doit.clock.getDelta() );
 
-  lesson6.controls.update();
+  doit.controls.update();
 
   render();
-  lesson6.stats.update();
+  doit.stats.update();
 
 }
 
 function render() {
   group.rotation.y += ( targetRotation - group.rotation.y ) * 0.05;
 
-  lesson6.renderer.render( lesson6.scene, lesson6.camera );
+  doit.renderer.render( doit.scene, doit.camera );
 
 }
 
 // Initialize lesson on page load
 function initializeLesson() {
-  lesson6.init();
+  doit.init();
   animate();
 }
 

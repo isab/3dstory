@@ -3,6 +3,8 @@
  * @author Tony Parisi / http://www.tonyparisi.com/ 
  */
 
+ //THIS FILE IS PART OF THREE.JS LIBRARY!!!
+
 THREE.ColladaLoader = function () {
 
 	var COLLADA = null;

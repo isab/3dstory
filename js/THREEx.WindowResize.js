@@ -14,6 +14,8 @@
 
 //
 
+//THIS FILE IS PART OF THREE.JS LIBRARY!!!
+
 /** @namespace */
 var THREEx	= THREEx 		|| {};
 

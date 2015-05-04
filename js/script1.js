@@ -1,4 +1,3 @@
-console.log("HEHEHRHEHR");
 var targetRotation = 0;
 var targetRotationOnMouseDown = 0;
 

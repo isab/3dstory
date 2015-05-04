@@ -170,7 +170,7 @@ var doit = {
 
         var text3d = new THREE.TextGeometry( theText, {
 
-          size: 20,
+          size: 15,
           height: 20,
           curveSegments: 2,
           font: "helvetiker"

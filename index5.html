@@ -32,8 +32,33 @@
         <script src="js/CanvasRenderer.js"></script>
         <script src="helvetiker_regular.typeface.js"></script>
         <script src="js/stats.min.js"></script>
-        <script src='js/threex.daynight.js'></script>
-        <script src="../js/script4.js"></script>
-        <a href="3dstory/index5.html" style="float: left;">Next Scene</a>   
+        <script src="js/howler.js"></script>
+        <script src="js/script5.js"></script>
+
+        <div style="float: left; width: 100%; height: 50px; border: 2px solid #EEEEEE; font: 15px Arial;"  class="styled-select">
+            <form>
+                They listened to some <select id="song" onchange="saveData();">
+                                        <option value="nothing"></option>
+                                        <option value="Taylor Swift">Taylor Swift</option>
+                                        <option value="Jackson 5">Jackson 5</option>
+                                    </select> and went to bed.<p>
+            </form>                                     
+        </div>
     </body>
+    <script>
+    function saveData(){
+      var s = document.getElementById("song");
+      var song = s.options[s.selectedIndex].value;
+
+       var _song = {
+         Song: song
+       };
+       //converts to JSON string the Object Literal
+       var so = JSON.stringify(_song);
+       localStorage.setItem('Song', so);
+
+       location.reload();
+    }
+    </script>
 </html>
+                

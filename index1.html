@@ -32,30 +32,40 @@
         <script src="js/CanvasRenderer.js"></script>
         <script src="helvetiker_regular.typeface.js"></script>
         <script src="js/stats.min.js"></script>
-        <script src="../js/script2.js"></script>
+        <script src="js/script1.js"></script>
 
         <div style="float: left; width: 100%; height: 50px; border: 2px solid #EEEEEE; font: 15px Arial;"  class="styled-select">
             <form>
-                Then <select id="p2" onchange="saveData();">
-                        <option value="nothing"></option>
-                        <option value="Dan">Dan</option>
-                        <option value="Isabel">Isabel</option>
-                    </select> came walking by.<p>
+                One day <select id="p1">
+                          <option value ="nothing"></option>
+                          <option value="Dan">Dan</option>
+                          <option value="Isabel">Isabel</option>
+                        </select> went walking at the <select id="set" onchange="saveData();">
+                                                        <option value ="nothing"></option>
+                                                        <option value="park">park</option>
+                                                        <option value="beach">beach</option>
+                                                    </select><p>
             </form>
-            <a href="3dstory/index3.html" style="float: left;">Next Scene</a>                                     
+            <a href="3dstory/index2.html" style="float: left;">Next Scene</a>
+            <p>                                     
         </div>
     </body>
     <script>
     function saveData(){
-      var p = document.getElementById("p2");
-      var p2 = p.options[p.selectedIndex].value;
+      var p = document.getElementById("p1");
+      var p1 = p.options[p.selectedIndex].value;
+      var s = document.getElementById("set");
+      var set = s.options[s.selectedIndex].value;
 
-       var _p2 = {
-         P2: p2
+       var _p1 = {
+         P1: p1,
+         Set: set
        };
+
+       //console.log(_p1.P1 + " " + _p1.Set);
        //converts to JSON string the Object Literal
-       var _p2p = JSON.stringify(_p2);
-       localStorage.setItem('P2p', _p2p);
+       var _p1set = JSON.stringify(_p1);
+       localStorage.setItem('P1Set', _p1set);
 
        location.reload();
     }

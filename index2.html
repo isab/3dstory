@@ -32,31 +32,30 @@
         <script src="js/CanvasRenderer.js"></script>
         <script src="helvetiker_regular.typeface.js"></script>
         <script src="js/stats.min.js"></script>
-        <script src="../js/script3.js"></script>
-
+        <script src="js/script2.js"></script>
 
         <div style="float: left; width: 100%; height: 50px; border: 2px solid #EEEEEE; font: 15px Arial;"  class="styled-select">
             <form>
-                They talked for a while and saw a <select id="ani" onchange="saveData();">
-                									<option value="nothing"></option>
-                                                    <option value="dog">dog</option>
-                                                    <option value="cat">cat</option>
-                                                </select> coming by.
+                Then <select id="p2" onchange="saveData();">
+                        <option value="nothing"></option>
+                        <option value="Dan">Dan</option>
+                        <option value="Isabel">Isabel</option>
+                    </select> came walking by.<p>
             </form>
-            <a href="3dstory/index4.html" style="float: left;">Next Scene</a>                                     
+            <a href="index3.html" style="float: left;">Next Scene</a>                                     
         </div>
     </body>
     <script>
     function saveData(){
-      var a = document.getElementById("ani");
-      var ani = a.options[a.selectedIndex].value;
+      var p = document.getElementById("p2");
+      var p2 = p.options[p.selectedIndex].value;
 
-       var _ani = {
-         Ani: ani
+       var _p2 = {
+         P2: p2
        };
        //converts to JSON string the Object Literal
-       var animal = JSON.stringify(_ani);
-       localStorage.setItem('Ani', animal);
+       var _p2p = JSON.stringify(_p2);
+       localStorage.setItem('P2p', _p2p);
 
        location.reload();
     }

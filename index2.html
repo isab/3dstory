@@ -24,32 +24,40 @@
     <body>
         <script src="js/three.min.js"></script>
         <script src="js/OBJLoader.js"></script>
+        <script src="js/MTLLoader.js"></script>
+        <script src="js/OBJMTLLoader.js"></script>
         <script src="js/THREEx.WindowResize.js"></script>
         <script src="js/OrbitControls.js"></script>
-        <script src="font1.js"></script>
+        <script src="js/Projector.js"></script>
+        <script src="js/CanvasRenderer.js"></script>
+        <script src="helvetiker_regular.typeface.js"></script>
         <script src="js/stats.min.js"></script>
         <script src="js/script2.js"></script>
 
         <div style="float: left; width: 100%; height: 50px; border: 2px solid #EEEEEE; font: 15px Arial;"  class="styled-select">
-            <form action="saveData()">
-                Then <select id="p2">
+            <form>
+                Then <select id="p2" onchange="saveData();">
+                        <option value="nothing"></option>
                         <option value="Dan">Dan</option>
                         <option value="Isabel">Isabel</option>
                     </select> came walking by.<p>
-                <input type="submit" value="Submit"><br>
-            </form>                                     
+            </form>
+            <a href="../index3.html" style="float: left;">Next Scene</a>                                     
         </div>
     </body>
     <script>
     function saveData(){
-      var p2 = document.getElementById('p2').value;
+      var p = document.getElementById("p2");
+      var p2 = p.options[p.selectedIndex].value;
 
        var _p2 = {
          P2: p2
        };
        //converts to JSON string the Object Literal
-       _p2 = JSON.stringify(_p2);
-       localStorage.setItem('P2', _p2);
+       var _p2p = JSON.stringify(_p2);
+       localStorage.setItem('P2p', _p2p);
+
+       location.reload();
     }
     </script>
 </html>
